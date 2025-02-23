@@ -16,6 +16,10 @@ struct ContentView: View {
                     .colorInvert()
             case .WindowScene:
                 WindowSceneView(viewModel: viewModel)
+                    .colorInvert()
+            case .WindowSceneDark:
+                WindowSceneView(viewModel: viewModel)
+//                    .colorInvert()
             }
         }
         .animation(.easeInOut(duration: 2), value: viewModel.currentScene)

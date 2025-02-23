@@ -22,9 +22,6 @@ struct IndoorSceneView : View {
                 CeilingView(screenWidth: screenWidth, screenHeight: screenHeight)
                 
                 LightSwitchView(viewModel: viewModel, screenWidth: screenWidth, screenHeight: screenHeight)
-                    .onTapGesture {
-                        viewModel.toggleLightMode()
-                    }
                 
                 FloorView(screenWidth: screenWidth, screenHeight: screenHeight)
                                

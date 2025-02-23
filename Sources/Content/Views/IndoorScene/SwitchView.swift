@@ -66,8 +66,8 @@ struct LightSwitchView: View {
                 startAnimationTimer()
         }
         .onTapGesture {
-//            viewModel.toggleScene()
-            viewModel.toggleLightMode()
+            viewModel.toggleScene()
+//            viewModel.toggleLightMode()
         }
     }
     

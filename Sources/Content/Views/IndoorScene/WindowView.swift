@@ -129,16 +129,6 @@ struct WindowSystemView: View {
             .onTapGesture {
                 viewModel.toggleScene()
             }
-//            .onAppear {
-//                let centerX = 0.9
-//                let centerY = 0.5
-//                viewModel.zoomAnchor = UnitPoint(x: centerX, y: centerY)
-//            }
-//            .onChange(of: geometry.frame(in: .global)) { _ in
-//                let centerX = geometry.frame(in: .global).midX / screenWidth
-//                let centerY = geometry.frame(in: .global).midY / screenHeight
-//                viewModel.windowCenter = UnitPoint(x: centerX, y: centerY)
-//            }
         }
     }
 }

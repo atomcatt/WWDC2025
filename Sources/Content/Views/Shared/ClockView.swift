@@ -6,22 +6,6 @@
 //
 import SwiftUI
 
-//// 修改后的ClockView保持原有功能，调整样式
-//struct ClockView: View {
-//    @State private var currentTime = ""
-//    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-//    
-//    var body: some View {
-//        Text(currentTime)
-//            .font(.system(size: 24, weight: .bold, design: .monospaced))
-//            .foregroundColor(.black)
-//            .onReceive(timer) { _ in
-//                let formatter = DateFormatter()
-//                formatter.dateFormat = "HH:mm"
-//                currentTime = formatter.string(from: Date())
-//            }
-//    }
-//}
 struct ClockView: View {
     @State private var hours = ""
     @State private var minutes = ""

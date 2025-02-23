@@ -13,6 +13,7 @@ class SceneViewModel: ObservableObject {
         case IndoorSceneDark
         case IndoorSceneLight
         case WindowScene
+        case WindowSceneDark
     }
     
     @Published var currentScene: SceneState = .IndoorSceneDark
@@ -21,6 +22,7 @@ class SceneViewModel: ObservableObject {
     @Published var isPlayingAudio = false          // 音频播放状态
     @Published var switchWiggle = false            // 开关晃动状态
     @Published var transitionProgress: CGFloat = 0 // 场景过渡进度
+    @Published var isAnimation: Bool = false
     
     @Published var viewOffset: CGSize = .zero
     @Published var isAnimating = false
@@ -38,58 +40,117 @@ class SceneViewModel: ObservableObject {
     
     @MainActor
     func toggleScene() {
-        DispatchQueue.main.asyncAfter(deadline: .now()){
-            withAnimation(.easeInOut(duration: 1)) {
-                if (self.curtainHeight == self.maxCurtainHeight) {
-                    self.curtainHeight = self.minCurtainHeight
+        if (isAnimating) {
+            print("trigger toggleScene, but return")
+            return
+        }
+        print("trigger toggleScene successfully")
+        isAnimating = true
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+                if (self.currentScene == .IndoorSceneDark) {
+                    DispatchQueue.main.asyncAfter(deadline: .now()) {
+                        withAnimation(.easeInOut(duration: 1)) {
+                            self.curtainHeight = self.minCurtainHeight
+                        }
+                        withAnimation(.easeInOut(duration: 2)) {
+                            if (self.isZoomed == false && self.currentScene == .IndoorSceneDark) {
+                                self.isZoomed = true
+                                self.zoomScale = 2.0
+                                self.zoomAnchor = self.windowCenter
+                            } else if (self.isZoomed == true){
+                                self.isZoomed = false
+                                self.zoomScale = 1.0
+                                self.zoomAnchor = .center
+                            }
+                        }
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        withAnimation(.easeInOut(duration: 1)) {
+                            self.currentScene = .WindowSceneDark
+                        }
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                        withAnimation(.easeInOut(duration: 10)) {
+                            if (self.currentScene == .WindowSceneDark && self.isZoomed == true) {
+                                self.currentScene = .WindowScene
+                            } else if (self.currentScene == .WindowScene) {
+                                
+                            }
+                        }
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 13) {
+                        self.isAnimating = false
+                    }
+                } else if (self.currentScene == .IndoorSceneLight) {
+                    withAnimation(.easeInOut(duration: 1)) {
+                            self.curtainHeight = self.maxCurtainHeight
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        withAnimation(.easeInOut(duration: 1)) {
+                            self.currentScene = .IndoorSceneDark
+                        }
+                        withAnimation(.easeInOut(duration: 1)) {
+                            if (self.isZoomed == false && self.currentScene == .IndoorSceneLight) {
+                                self.isZoomed = true
+                                self.zoomScale = 2.0
+                                self.zoomAnchor = self.windowCenter
+                            } else if (self.isZoomed == true){
+                                self.isZoomed = false
+                                self.zoomScale = 1.0
+                                self.zoomAnchor = .center
+                            }
+                        }
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        withAnimation(.easeInOut(duration: 1)) {
+                            if (self.currentScene == .IndoorSceneLight && self.isZoomed == true) {
+                                self.currentScene = .WindowScene
+                            } else if (self.currentScene == .WindowScene) {
+                                
+                            }
+                        }
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                        self.isAnimating = false
+                    }
                 } else {
-                    if (self.currentScene == .WindowScene) {
-                        self.curtainHeight = self.minCurtainHeight
-                    } else {
-                        self.curtainHeight = self.maxCurtainHeight
+                    withAnimation(.easeInOut(duration: 1)) {
+                        self.currentScene = .IndoorSceneLight
+                        self.isZoomed = true
+                        self.zoomScale = 2.0
+                        self.zoomAnchor = self.windowCenter
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        withAnimation(.easeInOut(duration: 1)) {
+                            self.curtainHeight = self.minCurtainHeight
+                        }
+                        withAnimation(.easeInOut(duration: 1)) {
+                            if (self.isZoomed == false && self.currentScene == .IndoorSceneLight) {
+                                self.isZoomed = true
+                                self.zoomScale = 2.0
+                                self.zoomAnchor = self.windowCenter
+                            } else if (self.isZoomed == true){
+                                self.isZoomed = false
+                                self.zoomScale = 1.0
+                                self.zoomAnchor = .center
+                            }
+                        }
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        withAnimation(.easeInOut(duration: 1)) {
+                            if (self.currentScene == .IndoorSceneLight && self.isZoomed == true) {
+                                self.currentScene = .WindowScene
+                            } else if (self.currentScene == .WindowScene) {
+                                
+                            }
+                        }
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                        self.isAnimating = false
                     }
                 }
-            }
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            withAnimation(.easeInOut(duration: 1)) {
-                if (self.currentScene == .IndoorSceneDark) {
-                    self.currentScene = .IndoorSceneLight
-                } else if (self.currentScene == .IndoorSceneLight) {
-                    self.currentScene = .IndoorSceneDark
-                } else {
-                    self.currentScene = .IndoorSceneLight
-                    self.isZoomed = true
-                    self.zoomScale = 2.0
-                    self.zoomAnchor = self.windowCenter
-                }
-            }
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            withAnimation(.easeInOut(duration: 1)) {
-                if (self.isZoomed == false && self.currentScene == .IndoorSceneLight) {
-                    self.isZoomed = true
-                    self.zoomScale = 2.0
-                    self.zoomAnchor = self.windowCenter
-                } else if (self.isZoomed == true){
-                    self.isZoomed = false
-                    self.zoomScale = 1.0
-                    self.zoomAnchor = .center
-                }
-            }
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            withAnimation(.easeInOut(duration: 1)) {
-//                self.currentScene = (self.currentScene == .IndoorSceneLight) ?  .WindowScene : (self.currentScene == .WindowScene ? .IndoorSceneLight : .IndoorSceneDark)
-                if (self.currentScene == .IndoorSceneLight && self.isZoomed == true) {
-                    self.currentScene = .WindowScene
-                } else if (self.currentScene == .WindowScene) {
-//                    self.currentScene = .IndoorSceneLight
-                }
-            }
         }
     }
-    
     @MainActor
     func toggleLightMode() {
         withAnimation(.easeInOut(duration: 1)) {

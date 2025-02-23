@@ -12,6 +12,7 @@ struct WindowSystemCenterView: View {
     let screenHeight: CGFloat
     
     var body: some View {
+        Color.black.edgesIgnoringSafeArea(.all)
         let windowWidth = screenWidth * 35/100
         let windowHeight = screenHeight * 33/100
         
@@ -20,7 +21,8 @@ struct WindowSystemCenterView: View {
             ZStack {
                 // 窗帘
                 Rectangle()
-                    .fill(Color.gray)
+//                    .fill(Color.gray)
+                    .fill(Color.white.opacity(0))
                     .frame(width: windowWidth + screenWidth * 2/100, height: viewModel.curtainHeight)
                     .offset(y: -40 - (viewModel.globalMaxCurtainHeight - viewModel.curtainHeight)/2)
                     .animation(.easeInOut(duration: 1.0), value: viewModel.curtainHeight)
@@ -32,7 +34,8 @@ struct WindowSystemCenterView: View {
                 // 窗棂
                 HStack(spacing: 0) {
                     Rectangle()
-                        .fill(Color.gray)
+//                        .fill(Color.gray)
+                        .fill(Color.white)
                         .frame(width: 10)
                     Spacer()
                 }
@@ -41,7 +44,8 @@ struct WindowSystemCenterView: View {
                 HStack(spacing: 0) {
                     Spacer()
                     Rectangle()
-                        .fill(Color.gray)
+//                        .fill(Color.gray)
+                        .fill(Color.white)
                         .frame(width: 10)
                 }
                 .frame(width: windowWidth, height: windowHeight)
@@ -49,7 +53,8 @@ struct WindowSystemCenterView: View {
                 GeometryReader { geometry in
                     HStack(spacing: 0) {
                         Rectangle()
-                            .fill(Color.gray)
+//                            .fill(Color.gray)
+                            .fill(Color.white)
                             .frame(width: 10)
                         Spacer()
                             .frame(width: geometry.size.width * 0.35)
@@ -59,7 +64,8 @@ struct WindowSystemCenterView: View {
                 
                 VStack(spacing: 0) {
                     Rectangle()
-                        .fill(Color.gray)
+//                        .fill(Color.gray)
+                        .fill(Color.white)
                         .frame(height: 10)
                     Spacer()
                 }
@@ -68,14 +74,16 @@ struct WindowSystemCenterView: View {
                 VStack(spacing: 0) {
                     Spacer()
                     Rectangle()
-                        .fill(Color.gray)
+//                        .fill(Color.gray)
+                        .fill(Color.white)
                         .frame(height: 10)
                 }
                 .frame(width: windowWidth, height: windowHeight)
                 
                 VStack(spacing: 0) {
                     Rectangle()
-                        .fill(Color.gray)
+//                        .fill(Color.gray)
+                        .fill(Color.white)
                         .frame(height: 10)
                 }
                 .frame(width: windowWidth, height: windowHeight)
@@ -97,13 +105,13 @@ struct WindowSystemCenterView: View {
                     path.addLine(to: CGPoint(x: windowBottomX + (windowWidth - bottomWidth) / 2, y: windowBottomY + trapezoidHeight))
                     path.closeSubpath()
                 }
-                .fill(Color.gray)  // 窗台颜色
+                .fill(Color.gray.opacity(0.0))  // 窗台颜色
                 .offset(x: 13)
-                ClockView()
-                    .frame(width: windowHeight * 0.5, height: windowHeight * 0.2)
-                    .background(Color.white)
-                    .padding(.top, 8)
-                    .offset(x: 100, y: 110)
+//                ClockView()
+//                    .frame(width: windowHeight * 0.5, height: windowHeight * 0.2)
+//                    .background(Color.white.opacity(0.0))
+//                    .padding(.top, 8)
+//                    .offset(x: 100, y: 110)
             }
             .frame(width: windowWidth, height: windowHeight)
         }
