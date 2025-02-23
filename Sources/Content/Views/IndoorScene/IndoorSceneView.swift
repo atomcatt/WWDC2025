@@ -41,6 +41,8 @@ struct IndoorSceneView : View {
                 value: viewModel.viewOffset
             )
             .coordinateSpace(name: "GlobalSpace")
+            .scaleEffect(viewModel.zoomScale, anchor: viewModel.zoomAnchor)
+            .animation(.easeInOut(duration: 1.0), value: viewModel.zoomScale)
         }
     }
 }

@@ -29,7 +29,6 @@ struct WindowSceneView : View {
             let scale: CGFloat = 2
             
             ZStack(alignment: .topLeading) {
-                
                 WindowSystemCenterView(viewModel: viewModel, screenWidth: screenWidth, screenHeight: screenHeight)
                     .scaleEffect(scale)
             }

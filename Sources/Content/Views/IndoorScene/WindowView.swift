@@ -23,7 +23,7 @@ struct WindowSystemView: View {
                 x: windowFrame.midX,
                 y: windowFrame.midY
             )
-//            let windowCenter = geometry.frame(in: .global).center
+            //            let windowCenter = geometry.frame(in: .global).center
             let normalizedX = windowCenter.x / UIScreen.main.bounds.width
             let normalizedY = windowCenter.y / UIScreen.main.bounds.height
             
@@ -129,9 +129,16 @@ struct WindowSystemView: View {
             .onTapGesture {
                 viewModel.toggleScene()
             }
-            .onAppear {
-//                viewModel.windowCenter = windowCenter
-            }
+//            .onAppear {
+//                let centerX = 0.9
+//                let centerY = 0.5
+//                viewModel.zoomAnchor = UnitPoint(x: centerX, y: centerY)
+//            }
+//            .onChange(of: geometry.frame(in: .global)) { _ in
+//                let centerX = geometry.frame(in: .global).midX / screenWidth
+//                let centerY = geometry.frame(in: .global).midY / screenHeight
+//                viewModel.windowCenter = UnitPoint(x: centerX, y: centerY)
+//            }
         }
     }
 }
